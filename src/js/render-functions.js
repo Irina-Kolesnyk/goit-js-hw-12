@@ -1,58 +1,44 @@
-/**
- * Returns the finished markup
- * @param {Array} arrOfObj
- * @returns {String}
- */
-export function renderCards(arrOfObj) {
-  const markup = arrOfObj.map(renderCard).join('\n');
-  return markup;
-}
-
-/**
- * Returns the markup for a single element
- * @param {Object} el
- * @returns {String}
- */
-export function renderCard(el) {
-  return `<li class="gallery-item">
-            <a class="gallery-link" href="${el.largeImageURL}">
-              <div class="gallery-image-thumb">
-                <img class="gallery-image" src="${el.webformatURL}" alt="${el.tags}" />
-              </div>
-              <ul class="property">
-                <li class="property__item">
-                  <p class="property__name">Likes</p>
-                  <p class="item-prop__quantity">${el.likes}</p>
-                </li>
-                <li class="property__item">
-                  <p class="property__name">Views</p>
-                  <p class="item-prop__quantity">${el.views}</p>
-                </li>
-                <li class="property__item">
-                  <p class="property__name">Comments</p>
-                  <p class="item-prop__quantity">${el.comments}</p>
-                </li>
-                <li class="property__item">
-                  <p class="property__name">Downloads</p>
-                  <p class="item-prop__quantity">${el.downloads}</p>
-                </li>
-              </ul>
-            </a>
-          </li>`;
-}
-
-/**
- * Adds class 'hidden' to the element
- * @param {*} loader
- */
-export function addLoader(loader) {
-  loader.classList.remove('loader-hidden');
-}
-
-/**
- * Removes class 'hidden' to the element
- * @param {*} loader
- */
-export function removeLoader(loader) {
-  loader.classList.add('loader-hidden');
+export function renderMarkup(imagesData) {
+  return imagesData
+    .map(
+      ({
+        largeImageURL,
+        webformatURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `
+    <li class="gallery-card">
+      <a href="${largeImageURL}" class="gallery-card-link">
+        <img
+          class="gallery-card-img"
+          src="${webformatURL}"
+          alt="${tags}"
+          width="360"
+        />
+      </a>
+      <ul class="image-desc-list">
+        <li class="image-desc-item">
+          <p class="image-desc-title">Likes</p>
+          <p class="image-desc-data">${likes}</p>
+        </li>
+        <li class="image-desc-item">
+          <p class="image-desc-title">Views</p>
+          <p class="image-desc-data">${views}</p>
+        </li>
+        <li class="image-desc-item">
+          <p class="image-desc-title">Comments</p>
+          <p class="image-desc-data">${comments}</p>
+        </li>
+        <li class="image-desc-item">
+          <p class="image-desc-title">Downloads</p>
+          <p class="image-desc-data">${downloads}</p>
+        </li>
+      </ul>
+    </li>
+  `
+    )
+    .join('');
 }

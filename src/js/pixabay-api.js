@@ -1,28 +1,23 @@
-import axios from 'axios';
-import { perPage } from '../main';
+import Axios from 'axios';
 
-/**
- *
- * @param {String} query
- * @returns {Object}
- */
-export async function sendQuery(imageName, pageNumber) {
-  axios.defaults.baseURL = 'https://pixabay.com';
-
-  const params = {
+const axios = Axios.create({
+  baseURL: 'https://pixabay.com/api/',
+  params: {
     key: '44443865-2fecc511f1b53cc9c5f157eba',
-    q: imageName,
     image_type: 'photo',
     orientation: 'horizontal',
-    safesearch: true,
-    per_page: perPage,
-    page: pageNumber,
-  };
+    safesearсh: true,
+    per_page: '15',
+  },
+});
 
-  try {
-    const response = await axios.get('/api/', { params });
-    return response.data;
-  } catch (err) {
-    console.log(err);
-  }
+export async function getImage(imgName, currentPage) {
+  const res = await axios.get('', {
+    params: {
+      q: imgName,
+      page: currentPage,
+    },
+  });
+
+  return res.data;
 }
